@@ -1,16 +1,26 @@
 <?php
 function isValidPhoneNumber($phone_number, $customer_id, $api_key) {
     $api_url = "https://rest-ww.telesign.com/v1/phoneid/$phone_number";
-    
+    /* 
+    # Change content type to application json
+    */
     $headers = [
         "Authorization: Basic " . base64_encode("$customer_id:$api_key"),
-        "Content-Type: application/x-www-form-urlencoded"
+        "Content-Type: application/json"
     ];
+    /*
+    Initialize empty json payload
+    Use HTTP POST instead of GET
+    POST json payload
+    */
+    $jsonData = '{}'; // Initialize empty json payload
     
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $api_url);
+    curl_setopt($ch, CURLOPT_POST, true);// Use HTTP POST
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData); // POST json payload
     
     $response = curl_exec($ch);
     $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
