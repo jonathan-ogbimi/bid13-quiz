@@ -31,7 +31,7 @@ function isValidPhoneNumber($phone_number, $customer_id, $api_key) {
     }
     
     $data = json_decode($response, true);
-    if (!isset($data['phone_type'])) {// fix to check for phone_type not numbering.phone_type
+    if (!isset($data['phone_type']['description'])) {// fix to check for phone_type not numbering.phone_type
         return false; // Unexpected API response
     }
     
