@@ -31,12 +31,12 @@ function isValidPhoneNumber($phone_number, $customer_id, $api_key) {
     }
     
     $data = json_decode($response, true);
-    if (!isset($data['numbering']['phone_type'])) {
+    if (!isset($data['phone_type'])) {// fix to check for phone_type not numbering.phone_type
         return false; // Unexpected API response
     }
     
     $valid_types = ["FIXED_LINE", "MOBILE", "VALID"];
-    return in_array(strtoupper($data['numbering']['phone_type']), $valid_types);
+    return in_array(strtoupper($data['phone_type']['description']), $valid_types);// fix to use phone_type.description 
 }
 
 // Usage example
